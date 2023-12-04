@@ -2,7 +2,7 @@ const {body, validationResult } = require('express-validator');
 const User = require('../models/users');
 const bcrypt = require('bcryptjs');
 const jwtHandler = require('../middleware/jwtHandler');
-const mongoose = require('mongoose');
+
 
 exports.register_get = async function(req, res, next) {
     return res.sendStatus(200);
@@ -15,10 +15,22 @@ exports.register_post = [
     .withMessage("Invalid first name.")
     .escape(),
 
+    body("username").custom(async value => {
+        const username = await User.find({username: value});
+
+        if (username.length > 0) {
+            throw new Error("Username already in use.")
+        }
+    }),
+
     body("email")
     .custom(async value => {
         const userEmail = await User.find({email: value});
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+
+        if (value.length === 0) {
+            throw new Error("Empty email.")
+        }
 
         if (userEmail.length > 0) {
             throw new Error("Email already in use.");
