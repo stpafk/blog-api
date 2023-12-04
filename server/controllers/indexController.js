@@ -3,6 +3,57 @@ const User = require('../models/users');
 const bcrypt = require('bcryptjs');
 const jwtHandler = require('../middleware/jwtHandler');
 
+exports.get_login = async function(req, res, next) {
+    return res.sendStatus(200);
+}
+
+exports.post_login = [
+
+    body("username")
+    .notEmpty()
+    .withMessage("Username should not be empty"),
+
+    body("password")
+    .notEmpty()
+    .withMessage("Password should not be empty")
+    .escape(),
+
+    async function(req, res, next) {
+        const {username, password} = req.body;
+
+        const user = await User.findOne({username: username}).exec();
+        console.log(user)
+        if (!user) {
+            res.status(400).json({
+                "error": {
+                    "field": "username",
+                    "message": "User does not exist."
+                }
+            });
+            return;
+        };
+
+        const match = bcrypt.compareSync(password, user.password);
+        console.log(match)
+
+        if (!match) {
+            res.status(400).json({
+                "error": {
+                    "field": "password",
+                    "message": "Passwords do not match."
+                }
+            });
+            return;
+        };
+
+        const token = jwtHandler.get_token(user._id);
+        res.status(200).json({
+            id: user._id,
+            token: 'Bearer ' + token 
+        });
+    },
+];
+
 
 exports.register_get = async function(req, res, next) {
     return res.sendStatus(200);

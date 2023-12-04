@@ -8,6 +8,9 @@ router.get('/', function(req, res, next) {
   return res.status(200);
 });
 
+router.get('/login', controller.get_login);
+router.post('/login', controller.post_login);
+
 router.get('/register', controller.register_get);
 router.post('/register', controller.register_post);
 
