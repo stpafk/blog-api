@@ -1,7 +1,8 @@
 const {body, validationResult } = require('express-validator');
 const User = require('../models/users');
 const bcrypt = require('bcryptjs');
-const jwtHandler = require('../middleware/jwtHandler')
+const jwtHandler = require('../middleware/jwtHandler');
+const mongoose = require('mongoose');
 
 exports.register_get = async function(req, res, next) {
     return res.sendStatus(200);
@@ -63,5 +64,17 @@ exports.register_post = [
             token: 'Bearer ' + token 
         });
     }
-]
+];
 
+exports.special = [
+    
+    jwtHandler.validate_token,
+
+    async function(req, res, next) {
+
+    const user = await User.find({_id: req.body.id}).exec();
+
+    res.status(200).json({
+        user
+    });
+}]
