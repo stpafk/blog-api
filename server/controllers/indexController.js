@@ -1,6 +1,7 @@
 const {body, validationResult } = require('express-validator');
 const User = require('../models/users');
 const bcrypt = require('bcryptjs');
+const jwtHandler = require('../middleware/jwtHandler')
 
 exports.register_get = async function(req, res, next) {
     return res.sendStatus(200);
@@ -56,7 +57,11 @@ exports.register_post = [
         });
 
         await user.save();
-        return res.send(200);
+        const token = jwtHandler.get_token(user._id)
+        return res.status(200).json({
+            id: user._id,
+            token: 'Bearer ' + token 
+        });
     }
 ]
 
