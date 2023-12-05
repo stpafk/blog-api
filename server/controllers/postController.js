@@ -2,6 +2,25 @@ const Post = require('../models/posts');
 require('dotenv').config
 const {validationResult, body} = require('express-validator');
 
+exports.get_post = async function(req, res, next) {
+    const post = await Post.findById(req.params.id);
+
+    if (post === null || !post.is_uploaded) {
+        res.status(404).json({
+            "message": "404 Page Not Found",
+        })
+        return;
+    }
+
+    res.status(200).json({
+        "header": {
+            "title": post.title,
+            "time_stamp": post.formatted_date,
+        },
+        "content": post.content,
+    })
+}
+
 exports.get_create = async function(req, res, next) {
 
     if (req.body.id !== process.env.SUPERUSER) {
@@ -54,4 +73,4 @@ exports.post_create = [
         "postId": post._id
     })
 
-}]
+}];
