@@ -34,7 +34,7 @@ exports.post_login = [
         const user = await User.findOne({username: username}).exec();
 
         if (!user) {
-            res.status(400).json({
+            res.status(401).json({
                 "error": {
                     "field": "username",
                     "message": "User does not exist."
@@ -46,7 +46,7 @@ exports.post_login = [
         const match = bcrypt.compareSync(password, user.password);
 
         if (!match) {
-            res.status(400).json({
+            res.status(401).json({
                 "error": {
                     "field": "password",
                     "message": "Passwords do not match."
@@ -64,11 +64,11 @@ exports.post_login = [
 ];
 
 
-exports.register_get = async function(req, res, next) {
+exports.get_register = async function(req, res, next) {
     return res.sendStatus(200);
 }
 
-exports.register_post = [
+exports.post_register = [
 
     body("username").trim()
     .isLength({min: 2, max: 50})
@@ -132,7 +132,7 @@ exports.register_post = [
 
         await user.save();
         const token = jwtHandler.get_token(user._id)
-        return res.status(200).json({
+        return res.status(201).json({
             id: user._id,
             token: 'Bearer ' + token 
         });
