@@ -14,10 +14,10 @@ exports.header_token = function(req, res, next) {
         const token = bearerHeader.split(' ')[1];
         req.token = token;
 
-        next();
+        return next();
     }
 
-    return res.status(403);
+    return res.sendStatus(403);
 };
 
 exports.validate_token = async (req, res, next) => {
