@@ -20,6 +20,15 @@ exports.post_login = [
     .escape(),
 
     async function(req, res, next) {
+
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+            errors: errors.array(),
+        });
+    };
+
         const {username, password} = req.body;
 
         const user = await User.findOne({username: username}).exec();

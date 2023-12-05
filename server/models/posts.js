@@ -16,9 +16,6 @@ const PostSchema = new Schema({
         default: Date.now(),
         required: true,
     },
-    messages: {
-        type: Schema.Types.ObjectId, ref: "Message"
-    },
     is_uploaded: {
         type: Boolean,
         required: true,
@@ -30,7 +27,7 @@ PostSchema.virtual("url").get(function() {
 })
 
 PostSchema.virtual("formatted_date").get(function() {
-    return DateTime.fromJSDate(this.time_stamp).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS);
+    return DateTime.fromJSDate(this.time_stamp).toLocaleString(DateTime.DATETIME_FULL);
 })
 
 module.exports = mongoose.Model("Post", PostSchema);
