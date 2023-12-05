@@ -2,6 +2,16 @@ const Post = require('../models/posts');
 require('dotenv').config
 const {validationResult, body} = require('express-validator');
 
+exports.get_index = async function (req, res, next) {
+    const posts = await Post.find({is_uploaded: true})
+    .sort({time_stamp: -1})
+    .exec();
+
+    res.status(200).json({
+        posts
+    })
+}
+
 exports.get_post = async function(req, res, next) {
     const post = await Post.findById(req.params.id);
 
