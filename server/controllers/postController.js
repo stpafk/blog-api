@@ -34,7 +34,7 @@ exports.get_post = async function(req, res, next) {
 exports.get_create = async function(req, res, next) {
 
     if (req.body.id !== process.env.SUPERUSER) {
-        return res.status(403)
+        return res.sendStatus(403)
     }
 
     res.status(200).json({
@@ -84,3 +84,37 @@ exports.post_create = [
     })
 
 }];
+
+exports.get_delete = async function(req, res, next) {
+
+    if (req.body.id !== process.env.SUPERUSER || !req.body.id) {
+        return res.sendStatus(403);
+    }
+
+    const post = await Post.findById(req.params.id);
+
+    if (post === null) {
+        res.status(404).json({
+            "message": "404 Page Not Found",
+        })
+        return;
+    }
+
+    res.status(200).json({
+        "message": "success",
+        "post": {
+            post,
+        }
+    });
+
+}
+
+exports.delete_delete = async function (req, res, next) {
+
+    if (req.body.id !== process.env.SUPERUSER) {
+        return res.sendStatus(403)
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+    res.sendStatus(200);
+}

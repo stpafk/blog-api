@@ -18,4 +18,16 @@ router.post('/create',
     postController.post_create,
 )
 
+router.get('/:id/delete',
+    jwtHandler.header_token,
+    jwtHandler.validate_token,
+    postController.get_delete,
+)
+
+router.delete('/:id/delete',
+    jwtHandler.header_token,
+    jwtHandler.validate_token,
+    postController.delete_delete,
+)
+
 module.exports = router;
