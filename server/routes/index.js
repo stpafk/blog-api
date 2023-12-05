@@ -10,8 +10,8 @@ router.get('/', postController.get_index);
 router.get('/login', controller.get_login);
 router.post('/login', controller.post_login);
 
-router.get('/register', controller.register_get);
-router.post('/register', controller.register_post);
+router.get('/register', controller.get_register);
+router.post('/register', controller.post_register);
 
 router.get('/special', jwt.header_token, controller.special);
 

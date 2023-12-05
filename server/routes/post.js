@@ -16,18 +16,30 @@ router.post('/create',
     jwtHandler.header_token,
     jwtHandler.validate_token,
     postController.post_create,
-)
+);
+
+router.get('/:id/update', 
+    jwtHandler.header_token,
+    jwtHandler.validate_token,
+    postController.get_update,
+);
+
+router.put('/:id/update', 
+    jwtHandler.header_token,
+    jwtHandler.validate_token,
+    postController.put_update,
+);
 
 router.get('/:id/delete',
     jwtHandler.header_token,
     jwtHandler.validate_token,
     postController.get_delete,
-)
+);
 
 router.delete('/:id/delete',
     jwtHandler.header_token,
     jwtHandler.validate_token,
     postController.delete_delete,
-)
+);
 
 module.exports = router;
