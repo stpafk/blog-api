@@ -11,6 +11,7 @@ exports.post_login = [
 
     body("username")
     .notEmpty()
+    .escape()
     .withMessage("Username should not be empty"),
 
     body("password")
@@ -22,7 +23,7 @@ exports.post_login = [
         const {username, password} = req.body;
 
         const user = await User.findOne({username: username}).exec();
-        console.log(user)
+
         if (!user) {
             res.status(400).json({
                 "error": {
@@ -34,7 +35,6 @@ exports.post_login = [
         };
 
         const match = bcrypt.compareSync(password, user.password);
-        console.log(match)
 
         if (!match) {
             res.status(400).json({
@@ -60,11 +60,10 @@ exports.register_get = async function(req, res, next) {
 }
 
 exports.register_post = [
-    
+
     body("username").trim()
     .isLength({min: 2, max: 50})
-    .withMessage("Invalid first name.")
-    .escape(),
+    .withMessage("Invalid first name."),
 
     body("username").custom(async value => {
         const username = await User.find({username: value});
@@ -72,7 +71,8 @@ exports.register_post = [
         if (username.length > 0) {
             throw new Error("Username already in use.")
         }
-    }),
+    })
+    .escape(),
 
     body("email")
     .custom(async value => {
@@ -90,7 +90,8 @@ exports.register_post = [
         if (!emailRegex.test(value)) {
             throw new Error("Invalid email.");
         };
-    }),
+    })
+    .escape(),
     
     body("password")
     .isLength({min: 6})
@@ -135,9 +136,9 @@ exports.special = [
 
     async function(req, res, next) {
 
-    const user = await User.find({_id: req.body.id}).exec();
+        const user = await User.find({_id: req.body.id}).exec();
 
-    res.status(200).json({
-        user
+        res.status(200).json({
+            user
     });
 }]
