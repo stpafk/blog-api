@@ -23,11 +23,11 @@ const PostSchema = new Schema({
 });
 
 PostSchema.virtual("url").get(function() {
-    return "";
+    return "/posts/" + this._id;
 })
 
 PostSchema.virtual("formatted_date").get(function() {
     return DateTime.fromJSDate(this.time_stamp).toLocaleString(DateTime.DATETIME_FULL);
 })
 
-module.exports = mongoose.Model("Post", PostSchema);
+module.exports = mongoose.model("Post", PostSchema);
