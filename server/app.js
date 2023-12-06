@@ -17,6 +17,9 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/post', postRouter);
+app.use('*', function(req, res) {
+  return res.status(404).send("Not found");
+});
 
 //connect to DATABASE
 
