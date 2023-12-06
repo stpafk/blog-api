@@ -20,7 +20,7 @@ exports.post_login = [
     .escape(),
 
     async function(req, res, next) {
-        console.log('here?')
+
         const errors = validationResult(req)
 
         if (!errors.isEmpty()) {

@@ -1,6 +1,6 @@
 const Post = require('../models/posts');
 require('dotenv').config
-const {validationResult, body} = require('express-validator');
+const {validationResult, body, param} = require('express-validator');
 const Message = require('../models/messages');
 
 exports.get_index = async function (req, res, next) {
@@ -157,6 +157,12 @@ exports.get_update = async function(req, res, next) {
 
 exports.put_update = [
 
+    param("id").custom(async value => {
+        const post = await Post.findById(value);
+        if (post === null) {
+            throw new Error("Invalid ID")
+        }
+    }),
     body("title")
     .notEmpty()
     .escape(),
