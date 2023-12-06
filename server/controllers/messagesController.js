@@ -3,7 +3,6 @@ const Message = require('../models/messages');
 const User = require('../models/users');
 require('dotenv').config
 const {validationResult, body} = require('express-validator');
-const { isValidObjectId } = require('mongoose');
 
 exports.post_message = [
 
@@ -21,7 +20,7 @@ exports.post_message = [
 
         const postId = req.params.id;
         const [post, user] = await Promise.all([
-            Post.findById(postId).exec().catch(err => console.log(err)),
+            Post.findById(postId).exec(),
             User.findById(req.userId).exec(),
         ]);
 
@@ -42,9 +41,7 @@ exports.post_message = [
 
         await message.save();
         res.status(201).json({
-            "user": {
-                user
-            },
+            success: true,
             "message": {
                 message,
             }

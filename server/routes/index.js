@@ -10,14 +10,12 @@ router.get('/', postController.get_index);
 router.get('/login', jwt.isLogged, controller.get_login);
 router.post('/login', 
     jwt.isLogged,
-    jwt.validate_token, 
     controller.post_login
 );
 
 router.get('/register', jwt.isLogged, controller.get_register);
 router.post('/register',
     jwt.isLogged,
-    jwt.validate_token, 
     controller.post_register
 );
 

@@ -14,6 +14,7 @@ exports.get_index = async function (req, res, next) {
 }
 
 exports.get_post = async function(req, res, next) {
+
     const post = await Post.findById(req.params.id);
 
     if (post === null || !post.is_uploaded) {
@@ -24,7 +25,7 @@ exports.get_post = async function(req, res, next) {
     }
 
     const messages = await Message.find({post: post._id})
-    .populate("username")
+    .populate({path: 'username', select: '_id username email'})
     .sort({time_stamp: -1})
     .exec();
 
@@ -88,8 +89,9 @@ exports.post_create = [
 
     await post.save();
 
-    res.status(200).json({
-        "postId": post._id
+    res.status(201).json({
+        success: true,
+        postId: post._id
     })
 
 }];
@@ -104,7 +106,7 @@ exports.get_delete = async function(req, res, next) {
 
     if (post === null) {
         res.status(404).json({
-            "message": "404 Page Not Found",
+            message: "404 Page Not Found",
         })
         return;
     }
