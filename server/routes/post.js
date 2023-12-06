@@ -52,6 +52,7 @@ router.post('/:id/message',
 );
 
 router.delete('/:id/message/:messageId',
+    validateId,
     jwtHandler.validate_token,
     messageController.delete_message,
 )

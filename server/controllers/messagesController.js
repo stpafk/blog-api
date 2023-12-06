@@ -24,11 +24,11 @@ exports.post_message = [
             User.findById(req.userId).exec(),
         ]);
 
-        if (post.length === 0) {
+        if (post === null) {
             return res.sendStatus(404);
         };
 
-        if (user.length === 0) {
+        if (user === null) {
             return res.sendStatus(403);
         }
 
@@ -50,5 +50,28 @@ exports.post_message = [
 ]
 
 exports.delete_message = async function(req, res, next) {
+
+    const message = await Message
+    .findById(req.params.messageId)
+    .populate("username")
+    .exec();
+
+    if (message === null) {
+        return res.status(404).json({
+            message: "Page not found"
+        })
+    }
+
+    const [userId, superUser] = [message.username._id.toString(), process.env.SUPERUSER];
+    
+    if (req.userId !== userId && req.userId !== superUser) {
+        return res.sendStatus(403);
+    };
+
+    await Message.findByIdAndDelete(message._id);
+    return res.status(201).json({
+        success: true,
+        message: "Message deleted."
+    })
 
 }
