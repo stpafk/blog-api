@@ -56,13 +56,14 @@ exports.post_login = [
         };
 
         const token = jwtHandler.get_token(user._id);
-        res.status(200)
+        res.status(301)
         .cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
         })
         .json({
-            "message": "Success"
+            success: true,
+            message: "Sucessfully Logged In",
         });
     },
 ];
@@ -142,7 +143,8 @@ exports.post_register = [
             secure: process.env.NODE_ENV === "production",
         })
         .json({
-            message: "Success"
+            success: true,
+            message: "User created."
         });
     }
 ];
@@ -157,4 +159,13 @@ exports.get_user = async function(req, res, next) {
     res.status(200).json({
         user
 });
+}
+
+exports.post_logout = async function(req, res, next) {
+    return res.clearCookie("token")
+    .status(301)
+    .json({
+        success: true,
+        message: "Successfully logged out",
+    })
 }
