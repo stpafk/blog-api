@@ -7,27 +7,17 @@ exports.get_token = function(id) {
     return jwt.sign({id: id}, secret);
 };
 
-exports.header_token = function(req, res, next) {
-    const bearerHeader = req.headers['authorization'];
-
-    if (typeof bearerHeader !== 'undefined') {
-        const token = bearerHeader.split(' ')[1];
-        req.token = token;
-
-        return next();
+exports.validate_token = (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.sendStatus(403);
     }
 
-    return res.sendStatus(403);
-};
-
-exports.validate_token = async (req, res, next) => {
-    jwt.verify(req.token, secret, async (err) => {
-        if (err) {
-            return res.status(403).json({
-                "alert": "Access Denied."
-            });
-        }
-
-        next()
-    });
+    try {
+        const data = jwt.verify(token, process.env.SECRET);
+        req.userId = data.id;
+        return next();
+    } catch {
+        return res.sendStatus(403)
+    }
 };
