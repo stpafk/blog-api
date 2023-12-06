@@ -42,7 +42,7 @@ exports.get_post = async function(req, res, next) {
 
 exports.get_create = async function(req, res, next) {
 
-    if (req.body.id !== process.env.SUPERUSER) {
+    if (req.userId !== process.env.SUPERUSER) {
         return res.sendStatus(403)
     }
 
@@ -67,7 +67,7 @@ exports.post_create = [
     
     async function(req, res, next) {
 
-        if (req.body.id !== process.env.SUPERUSER) {
+        if (req.userId !== process.env.SUPERUSER) {
             return res.status(403);
         };
 
@@ -96,7 +96,7 @@ exports.post_create = [
 
 exports.get_delete = async function(req, res, next) {
 
-    if (req.body.id !== process.env.SUPERUSER || !req.body.id) {
+    if (req.userId !== process.env.SUPERUSER || !req.userId) {
         return res.sendStatus(403);
     }
 
@@ -120,7 +120,7 @@ exports.get_delete = async function(req, res, next) {
 
 exports.delete_delete = async function (req, res, next) {
 
-    if (req.body.id !== process.env.SUPERUSER) {
+    if (req.userId !== process.env.SUPERUSER) {
         return res.sendStatus(403)
     }
 
@@ -130,7 +130,7 @@ exports.delete_delete = async function (req, res, next) {
 
 exports.get_update = async function(req, res, next) {
 
-    if (req.body.id !== process.env.SUPERUSER || !req.body.id) {
+    if (req.userId !== process.env.SUPERUSER || !req.userId) {
         return res.sendStatus(403);
     }
 
@@ -167,7 +167,7 @@ exports.put_update = [
     
     async function(req, res, next) {
 
-        if (req.body.id !== process.env.SUPERUSER) {
+        if (req.userId !== process.env.SUPERUSER) {
             return res.sendStatus(403);
         };
 

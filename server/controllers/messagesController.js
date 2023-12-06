@@ -7,14 +7,6 @@ const { isValidObjectId } = require('mongoose');
 
 exports.post_message = [
 
-    body("userId").custom(value =>  {
-            const validate = isValidObjectId(value);
-            if (!validate) {
-                throw new Error("Invalid ID");
-            }
-        }
-    )
-    .escape(),
     body("content").notEmpty().escape(),
 
     async function(req, res, next) {
@@ -30,7 +22,7 @@ exports.post_message = [
         const postId = req.params.id;
         const [post, user] = await Promise.all([
             Post.findById(postId).exec().catch(err => console.log(err)),
-            User.findById(req.body.userId).exec(),
+            User.findById(req.userId).exec(),
         ]);
 
         if (post.length === 0) {
