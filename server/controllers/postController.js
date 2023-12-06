@@ -126,6 +126,7 @@ exports.delete_delete = async function (req, res, next) {
         return res.sendStatus(403)
     }
 
+    await Message.deleteMany({post: req.params.id})
     await Post.findByIdAndDelete(req.params.id);
     res.sendStatus(200);
 }
