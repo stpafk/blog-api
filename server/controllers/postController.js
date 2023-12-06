@@ -1,6 +1,7 @@
 const Post = require('../models/posts');
 require('dotenv').config
 const {validationResult, body} = require('express-validator');
+const Message = require('../models/messages');
 
 exports.get_index = async function (req, res, next) {
     const posts = await Post.find({is_uploaded: true})
@@ -22,12 +23,20 @@ exports.get_post = async function(req, res, next) {
         return;
     }
 
+    const messages = await Message.find({post: post._id})
+    .populate("username")
+    .sort({time_stamp: -1})
+    .exec();
+
     res.status(200).json({
         "header": {
             "title": post.title,
             "time_stamp": post.formatted_date,
         },
         "content": post.content,
+        "messages": {
+            messages
+        }
     })
 }
 
