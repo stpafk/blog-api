@@ -20,7 +20,7 @@ exports.post_login = [
     .escape(),
 
     async function(req, res, next) {
-
+        console.log('here?')
         const errors = validationResult(req)
 
         if (!errors.isEmpty()) {
@@ -56,9 +56,13 @@ exports.post_login = [
         };
 
         const token = jwtHandler.get_token(user._id);
-        res.status(200).json({
-            id: user._id,
-            token: 'Bearer ' + token 
+        res.status(200)
+        .cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+        })
+        .json({
+            "message": "Success"
         });
     },
 ];
@@ -132,22 +136,25 @@ exports.post_register = [
 
         await user.save();
         const token = jwtHandler.get_token(user._id)
-        return res.status(201).json({
-            id: user._id,
-            token: 'Bearer ' + token 
+        return res.status(201)
+        .cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+        })
+        .json({
+            message: "Success"
         });
     }
 ];
 
-exports.special = [
-    
-    jwtHandler.validate_token,
+exports.get_user = async function(req, res, next) {
 
-    async function(req, res, next) {
+    if (!req.userId) {
+        return res.sendStatus(403);
+    }
 
-        const user = await User.find({_id: req.body.id}).exec();
-
-        res.status(200).json({
-            user
-    });
-}]
+    const user = await User.find({_id: req.userId}).exec();
+    res.status(200).json({
+        user
+});
+}
