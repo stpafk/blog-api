@@ -21,3 +21,16 @@ exports.validate_token = (req, res, next) => {
         return res.sendStatus(403)
     }
 };
+
+exports.isLogged = function (req, res, next) {
+    const token = req.cookies.token;
+
+    if (token) {
+            return res.status(301).json({
+                success: true,
+                redirectUrl: "/",
+            });
+    }
+
+    next();
+}
