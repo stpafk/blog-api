@@ -13,6 +13,6 @@ router.post('/login', controller.post_login);
 router.get('/register', controller.get_register);
 router.post('/register', controller.post_register);
 
-router.get('/special', jwt.header_token, controller.special);
+router.get('/user', jwt.validate_token, controller.get_user);
 
 module.exports = router;
