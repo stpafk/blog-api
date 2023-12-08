@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function useIsLogged() {
 
+    const [loading, setLoading] = useState(true)
     const [logged, setLogged] = useState(false);
 
     useEffect(() => {
@@ -15,13 +16,16 @@ function useIsLogged() {
             .then((res) => {
                 if (res.status === 200) {
                     setLogged(true);
+                    setLoading(false);
                     throw new Error('Already logged');
                 }
             })
             .catch(err => console.log(err))
-    }, []);
+            .finally(setLoading(false));
+    });
 
-    return logged;
+    if (!loading) return logged;
+
 };
 
 export default useIsLogged;
