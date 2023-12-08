@@ -59,6 +59,7 @@ exports.post_login = [
         res.status(301)
         .cookie("token", token, {
             httpOnly: true,
+            origin: 'http://localhost:5173',
             secure: process.env.NODE_ENV === "production",
         })
         .json({
@@ -140,6 +141,7 @@ exports.post_register = [
         return res.status(201)
         .cookie("token", token, {
             httpOnly: true,
+            origin: 'http://localhost:5173',
             secure: process.env.NODE_ENV === "production",
         })
         .json({
