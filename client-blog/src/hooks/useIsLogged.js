@@ -5,21 +5,20 @@ function useIsLogged() {
     const [logged, setLogged] = useState(false);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:3000/user",  {
+        fetch("http://localhost:3000/user",  {
             method: "GET",
+            credentials: 'include',  
             headers: {
-                'Access-Control-Allow-Origin': '*',   
-                }        
+                "Content-Type": "application/json", 
+            } 
             })
         .then((res) => {
             if (res.status >= 400) {
                 return false;
             } 
-            
             res.json();
         })
-        .then(() => setLogged(logged))
-        .catch(err => console.log(err))
+        .then(() => setLogged(true))
     }, []);
 
     return logged;

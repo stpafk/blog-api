@@ -8,7 +8,7 @@ export default function Login() {
 
     const isLogged = useIsLogged();
     const nav = useNavigate();
-
+    console.log(isLogged)
     if (isLogged) {
         nav('/');
     };
@@ -16,6 +16,7 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         fetch("http://localhost:3000/login", {
+            credentials: "include",
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
