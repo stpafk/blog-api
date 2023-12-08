@@ -22,7 +22,7 @@ function useIsLogged() {
             })
             .catch(err => console.log(err))
             .finally(setLoading(false));
-    });
+    }, []);
 
     if (!loading) return logged;
 
