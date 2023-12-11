@@ -1,4 +1,4 @@
-import { useIsLogged } from "../../../hooks/useLogged";
+import { useIsLogged } from '../../../context/LoggedContext'
 
 export default function Anchor() {
 
@@ -6,7 +6,7 @@ export default function Anchor() {
 
     return(
             <>
-            {!isLogged ?
+            {isLogged ?
                 <div>
                     <a href="/login">Logout</a>
                 </div>

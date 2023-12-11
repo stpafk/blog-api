@@ -1,16 +1,13 @@
 import RegisterForm from "../../components/Form/RegisterForm";
 import Footer from "../../components/UI/Footer";
 import Header from "../../components/UI/Header/Header";
-import useIsLogged from "../../hooks/useIsLogged";
 import { useNavigate } from "react-router-dom";
+import { useUpdateLogged } from "../../context/LoggedContext";
 
 export default function Register() {
 
-    const isLogged = useIsLogged();
     const nav = useNavigate();
-    if (isLogged) {
-        nav('/');
-    };
+    const update = useUpdateLogged();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,17 +33,20 @@ export default function Register() {
             
             res.json();
         })
-        .then(nav("/"))
+        .then( () => {
+            update();
+            nav("/"); 
+        })
         .catch(err => console.log(err))
     }
     
     return (
         <>
         <Header />
-        <main>
-            <h1>Register</h1>
-            <RegisterForm handleSubmit={handleSubmit}/>
-        </main>
+            <main>
+                <h1>Register</h1>
+                <RegisterForm handleSubmit={handleSubmit}/>
+            </main>
         <Footer />
         </>
     )
