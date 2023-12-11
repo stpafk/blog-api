@@ -1,24 +1,23 @@
-import useIsLogged from "../../../hooks/useIsLogged"
+import { useIsLogged } from "../../../hooks/useLogged";
 
 export default function Anchor() {
 
     const isLogged = useIsLogged();
 
-    if (isLogged) {
-        return(
-        <>
-            <a href="" type="hidden"></a>
-            <a href="/logout">Logout</a>
-        </>
-        )
-    }
+    return(
+            <>
+            {!isLogged ?
+                <div>
+                    <a href="/login">Logout</a>
+                </div>
+            : 
+            <div>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            </div>
+            }
+            </>
+    )
 
-    if (!isLogged) {
-        return(
-        <>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        </> 
-        )
-    }
+   
 }
