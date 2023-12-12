@@ -28,6 +28,15 @@ export default function Router() {
                 {path: "register", element: <Register />},
                 {path: "logout", element: <Logout />}
             ]
+        },
+        {
+            path: "/post", 
+            element: null,
+            errorElement: null,
+            loader: async () => { return await fetchUser()},
+            children: [
+                {path: ":id", element: null}
+            ]
         }
     ])
 

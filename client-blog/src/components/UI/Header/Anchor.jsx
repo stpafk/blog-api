@@ -1,4 +1,5 @@
-import { useIsLogged } from '../../../context/LoggedContext'
+import { useIsLogged } from '../../../context/LoggedContext';
+import {Link} from "react-router-dom";
 
 export default function Anchor() {
 
@@ -8,12 +9,12 @@ export default function Anchor() {
             <>
             {isLogged ?
                 <div>
-                    <a href="/user/logout">Logout</a>
+                    <Link to="/user/logout">Logout</Link>
                 </div>
             : 
             <div>
-                <a href="/user/login">Login</a>
-                <a href="/user/register">Register</a>
+                <Link to="/user/login">Login</Link>
+                <Link to="/user/register">Register</Link>
             </div>
             }
             </>

@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import Anchor from './Anchor';
+import { Link } from 'react-router-dom';
 
 export default function List() {
 
     return(
         <>
         <InnerLeft>
-            <a href="">
+            <Link to="/">
                 <img src="Logo" alt="" />
-            </a>
+            </Link>
             <UlStyled>
                 <LiStyled>
-                    <a href="/">Home</a>
+                    <Link to="/">Home</Link>
                 </LiStyled>
                 <LiStyled>
                     <a href="/contact">Contact</a>
