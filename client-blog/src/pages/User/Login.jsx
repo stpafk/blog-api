@@ -8,11 +8,13 @@ export default function Login() {
     const [, update] = useIsLogged();
     const [user, nav] = useOutletContext(); 
 
-    useEffect(() => {
+    useEffect(() => {       
         if (user) {
             nav("/");
-        };
-    })
+        }
+
+    }, [nav, user])
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,9 +32,9 @@ export default function Login() {
         })
         .then(res => {
             if (res.status >= 400) {
-                alert("error")
-                return;
-            };
+                alert("error");
+                return
+            }
             
             res.json();
         })
@@ -43,11 +45,12 @@ export default function Login() {
         .catch(err => console.log(err))
     }
 
+    if (!user) {
     return (
             <main>
                 <h1>Login</h1>
                 <LoginForm handleSubmit={handleSubmit}/>
             </main>
         )
-
+    }
 }

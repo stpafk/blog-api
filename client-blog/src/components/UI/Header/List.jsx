@@ -22,17 +22,17 @@ export default function List() {
             <UlStyled className="nav right ul">
                 <LiStyled id="twitter">
                     <a href="https://twitter.com/dubsteph4n">
-                        <i class="devicon-twitter-original"></i>
+                        <i className="devicon-twitter-original"></i>
                     </a>
                 </LiStyled>
                 <li className="nav link" id="github">
                     <a href="https://github.com/stpafk">
-                        <i class="devicon-github-original"></i>
+                        <i className="devicon-github-original"></i>
                     </a>
                 </li>
                 <LiStyled id="linkedin">
                     <a href="https://www.linkedin.com/in/stephan-allek-weigert-53801619">
-                        <i class="devicon-linkedin-plain"></i>
+                        <i className="devicon-linkedin-plain"></i>
                     </a>
                 </LiStyled>
             </UlStyled>
@@ -41,7 +41,7 @@ export default function List() {
         </>
     );
 
-};
+}
 
 const InnerLeft = styled.div`
     display: flex;

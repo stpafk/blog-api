@@ -5,4 +5,4 @@ export default function ErrorPage() {
         <p> Error </p>
     )
 
-};
+}

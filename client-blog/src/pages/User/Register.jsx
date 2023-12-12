@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import RegisterForm from "../../components/Form/RegisterForm";
-import {userOutletContext} from "react-router-dom";
+import {useOutletContext} from "react-router-dom";
 import { useIsLogged } from "../../context/LoggedContext";
 
 export default function Register() {
@@ -11,8 +11,9 @@ export default function Register() {
     useEffect(() => {
         if (user) {
             nav("/");
-        };
-    })
+        }
+
+    }, [user, nav])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,10 +32,10 @@ export default function Register() {
         })
         .then(res => {
             if (res.status >= 400) {
-                alert("error")
+                alert("error");
                 //need to implement error handling
-                return;
-            };
+                return
+            }
             
             res.json();
         })
@@ -45,13 +46,14 @@ export default function Register() {
         .catch(err => console.log(err))
     }
     
-    return (
-        <>
-        <main>
-            <h1>Register</h1>
-            <RegisterForm handleSubmit={handleSubmit}/>
-        </main>
-        </>
-    )
-
+    if (!user) {
+        return (
+            <>
+            <main>
+                <h1>Register</h1>
+                <RegisterForm handleSubmit={handleSubmit}/>
+            </main>
+            </>
+        )
+        }
 }

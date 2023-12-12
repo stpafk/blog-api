@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as Form from "./Style";
+import PropTypes from "prop-types";
 
 export default function LoginForm(props) {
 
@@ -34,4 +35,8 @@ export default function LoginForm(props) {
             </Form.StyledForm>          
     )
 
-};
+}
+
+LoginForm.propTypes = {
+    handleSubmit: PropTypes.func,
+}

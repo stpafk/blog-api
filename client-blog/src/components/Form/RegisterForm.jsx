@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as Form from "./Style";
-// Idea: maybe have a parent element that handles login/register
+import PropTypes from "prop-types";
+
 export default function RegisterForm(props) {
 
     const [value, setValues] = useState({
@@ -56,4 +57,8 @@ export default function RegisterForm(props) {
         </>
     )
 
-};
+}
+
+RegisterForm.propTypes = {
+    handleSubmit: PropTypes.func,
+}

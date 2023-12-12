@@ -13,14 +13,17 @@ export default function Router() {
         {
             path: "/",
             element: <Home />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            loader: async () => {
+                return await fetchUser();
+            }
         },
         {
             path: "/user",
             element: <Index />, 
             errorElement: <ErrorPage />,
             loader: async () => { return await fetchUser() },
-            children: [,
+            children: [
                 {path: "login", element: <Login />},
                 {path: "register", element: <Register />},
                 {path: "logout", element: <Logout />}

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 
 const LoggedContext = React.createContext();
 
 export function useIsLogged() {
-    return useContext(LoggedContext);
-};
+    return useContext(LoggedContext)
+}
 
 export default function LoggedInProvider({children}) {
 
@@ -19,4 +20,11 @@ export default function LoggedInProvider({children}) {
         {children}
     </LoggedContext.Provider>
     )
+}
+
+LoggedInProvider.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]).isRequired
 }

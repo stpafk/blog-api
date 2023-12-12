@@ -2,32 +2,26 @@ import { useEffect, useState } from "react";
 import Footer from "../../components/UI/Footer";
 import Header from "../../components/UI/Header/Header";
 import Body from "./Body";
-import { fetchUser } from "../../utils/handleFetchUser";
-import { useUpdateUserContext } from "../../context/UserContext";
+import {useLoaderData} from "react-router-dom";
 import { useIsLogged } from "../../context/LoggedContext";
+import { useUserContext } from "../../context/UserContext";
 
 export default function Home() {
 
-    const updateUser = useUpdateUserContext();
+    const [, updateUser] = useUserContext();
     const [, update] = useIsLogged();
+    const data = useLoaderData();
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        const fetch = async () => {
-            const data = await fetchUser();
-
-            if (!data) {
-                return false; 
-            }
-
-            update(true);
+        if (data) {
             updateUser(data);
-            return false;
+            update(true);
+            setLoading(false);
         }
 
-        fetch().catch(err => console.log(err))
-        .finally(res => setLoading(res));
-    }, [])
+        setLoading(false);
+    }, [data, update, updateUser])
     
 
     if (loading) {
@@ -44,4 +38,4 @@ export default function Home() {
         </>
     );
 
-};
+}

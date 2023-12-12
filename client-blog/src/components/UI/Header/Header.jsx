@@ -11,7 +11,7 @@ export default function Header() {
             </Outer>
         </HeaderStyled>
     )
-};
+}
 
 const HeaderStyled = styled.header`
     display: flex;
