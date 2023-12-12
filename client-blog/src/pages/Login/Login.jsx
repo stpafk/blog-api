@@ -1,16 +1,13 @@
 import LoginForm from "../../components/Form/LoginForm";
 import Footer from "../../components/UI/Footer";
 import Header from "../../components/UI/Header/Header";
-import useIsLogged from "../../hooks/useIsLogged";
 import { useNavigate } from "react-router-dom";
+import { useUpdateLogged } from "../../context/LoggedContext";
 
 export default function Login() {
 
-    const isLogged = useIsLogged();
     const nav = useNavigate();
-    if (isLogged) {
-        nav('/');
-    };
+    const update = useUpdateLogged();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,21 +31,22 @@ export default function Login() {
             
             res.json();
         })
-        .then(nav("/"))
+        .then(() => {
+            update();
+            nav("/");
+        })
         .catch(err => console.log(err))
     }
 
-    if (!isLogged) {
-        return (
+    return (
             <>
-                <Header />
-                    <main>
-                        <h1>Login</h1>
-                        <LoginForm handleSubmit={handleSubmit}/>
-                    </main>
-                <Footer />
+            <Header />
+                <main>
+                    <h1>Login</h1>
+                    <LoginForm handleSubmit={handleSubmit}/>
+                </main>
+            <Footer />
             </>
         )
-    }
 
 }
