@@ -2,12 +2,12 @@ import RegisterForm from "../../components/Form/RegisterForm";
 import Footer from "../../components/UI/Footer";
 import Header from "../../components/UI/Header/Header";
 import { useNavigate } from "react-router-dom";
-import { useUpdateLogged } from "../../context/LoggedContext";
+import { useIsLogged } from "../../context/LoggedContext";
 
 export default function Register() {
 
     const nav = useNavigate();
-    const update = useUpdateLogged();
+    const [, update] =  useIsLogged();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,7 +34,7 @@ export default function Register() {
             res.json();
         })
         .then( () => {
-            update();
+            update(true);
             nav("/"); 
         })
         .catch(err => console.log(err))
