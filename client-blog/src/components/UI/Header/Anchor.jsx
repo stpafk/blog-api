@@ -2,7 +2,7 @@ import { useIsLogged } from '../../../context/LoggedContext'
 
 export default function Anchor() {
 
-    const isLogged = useIsLogged();
+    const [ isLogged , ] = useIsLogged();
 
     return(
             <>
