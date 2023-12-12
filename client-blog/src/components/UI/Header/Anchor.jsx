@@ -8,12 +8,12 @@ export default function Anchor() {
             <>
             {isLogged ?
                 <div>
-                    <a href="/login">Logout</a>
+                    <a href="/user/logout">Logout</a>
                 </div>
             : 
             <div>
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
+                <a href="/user/login">Login</a>
+                <a href="/user/register">Register</a>
             </div>
             }
             </>

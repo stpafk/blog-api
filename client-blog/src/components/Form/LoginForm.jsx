@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Footer from "../UI/Footer";
-import Header from "../UI/Header/Header";
 import * as Form from "./Style";
 
 export default function LoginForm(props) {

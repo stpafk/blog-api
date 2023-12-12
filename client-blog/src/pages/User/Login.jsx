@@ -1,13 +1,18 @@
 import LoginForm from "../../components/Form/LoginForm";
-import Footer from "../../components/UI/Footer";
-import Header from "../../components/UI/Header/Header";
-import { useNavigate } from "react-router-dom";
 import { useIsLogged } from "../../context/LoggedContext";
+import {useOutletContext} from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Login() {
 
-    const nav = useNavigate();
     const [, update] = useIsLogged();
+    const [user, nav] = useOutletContext(); 
+
+    useEffect(() => {
+        if (user) {
+            nav("/");
+        };
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,14 +44,10 @@ export default function Login() {
     }
 
     return (
-            <>
-            <Header />
-                <main>
-                    <h1>Login</h1>
-                    <LoginForm handleSubmit={handleSubmit}/>
-                </main>
-            <Footer />
-            </>
+            <main>
+                <h1>Login</h1>
+                <LoginForm handleSubmit={handleSubmit}/>
+            </main>
         )
 
 }

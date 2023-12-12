@@ -1,13 +1,18 @@
+import { useEffect } from "react";
 import RegisterForm from "../../components/Form/RegisterForm";
-import Footer from "../../components/UI/Footer";
-import Header from "../../components/UI/Header/Header";
-import { useNavigate } from "react-router-dom";
+import {userOutletContext} from "react-router-dom";
 import { useIsLogged } from "../../context/LoggedContext";
 
 export default function Register() {
 
-    const nav = useNavigate();
     const [, update] =  useIsLogged();
+    const [user, nav] = useOutletContext(); 
+
+    useEffect(() => {
+        if (user) {
+            nav("/");
+        };
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,12 +47,10 @@ export default function Register() {
     
     return (
         <>
-        <Header />
-            <main>
-                <h1>Register</h1>
-                <RegisterForm handleSubmit={handleSubmit}/>
-            </main>
-        <Footer />
+        <main>
+            <h1>Register</h1>
+            <RegisterForm handleSubmit={handleSubmit}/>
+        </main>
         </>
     )
 
