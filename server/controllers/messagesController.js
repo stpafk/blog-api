@@ -38,7 +38,7 @@ exports.post_message = [
             content: req.body.content,
             time_stamp: new Date(),
         });
-
+        message.populate("username")
         await message.save();
         res.status(201).json({
             success: true,
