@@ -8,11 +8,13 @@ const fetchUser = async () => {
             } 
         });
     
+    if (!res.isLogged) {
+        return false;
+    }
+
     if (res.status === 200) {
         return res.json();
     }
-        
-    return res.ok;
 
 }
 

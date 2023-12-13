@@ -10,7 +10,9 @@ exports.get_token = function(id) {
 exports.validate_token = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
-        return res.sendStatus(403);
+        return res.status(200).json({
+            "isLogged": false
+        });
     }
 
     try {
@@ -18,7 +20,9 @@ exports.validate_token = (req, res, next) => {
         req.userId = data.id;
         return next();
     } catch {
-        return res.sendStatus(403)
+        return res.sendStatus(200).json({
+            "isLogged": false
+        });
     }
 };
 
