@@ -7,14 +7,13 @@ const fetchUser = async () => {
                 "Content-Type": "application/json", 
             } 
         });
-    
-    if (!res.isLogged) {
-        return false;
+    const data = await res.json();
+
+    if (data.user !== undefined) {
+        return data;
     }
 
-    if (res.status === 200) {
-        return res.json();
-    }
+    return false
 
 }
 

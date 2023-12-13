@@ -1,10 +1,14 @@
 import {useOutletContext} from "react-router-dom";
 import { useEffect } from "react";
+import { useIsLogged } from "../../context/LoggedContext";
+import { useUserContext } from "../../context/UserContext";
 
 export default function Logout() {
      
     const [user, nav] = useOutletContext();
-
+    const [, setUser] = useUserContext();
+    const [, setLogged] = useIsLogged();
+    
     useEffect(() => {
         if (!user) return nav("/")
     }, [user, nav])
@@ -14,8 +18,14 @@ export default function Logout() {
             method: "POST",
             credentials: "include",
         })
+        .then(() => {
+            setLogged(false);
+            setUser({});
+        })
         .catch(err => console.log(err))
-        .finally(nav("/"));
+        .finally(() => {
+            nav("/");
+        });
     }
 
     if (user) {
