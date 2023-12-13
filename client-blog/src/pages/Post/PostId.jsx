@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { fetchPost } from "../../utils/handleFetchPost";
 import Article from "../../components/UI/Post/Article";
+import Comments from "../../components/UI/Post/Comments";
+import CommentForm from "../../components/Form/CommentForm";
 
 export default function PostId() {
 
@@ -25,13 +27,17 @@ export default function PostId() {
         })
 
     }, [])
-
+    
     if (loading) return <main>Fetching data....</main>
     if (error) return <ErrorPage />
 
     return(
         <main>
             <Article post={post}/>
+            <div>
+                <CommentForm />
+                <Comments messages={post.messages.messages}/>
+            </div>
         </main>
     )
 
