@@ -7,6 +7,9 @@ import Register from './User/Register';
 import Logout from "./User/Logout";
 import Index from "./User/Index";
 import { fetchUser } from "../utils/handleFetchUser";
+import Post from "./Post/Post";
+import PostId from "./Post/PostId";
+
 
 export default function Router() {
     const router = createBrowserRouter([
@@ -31,11 +34,11 @@ export default function Router() {
         },
         {
             path: "/post", 
-            element: null,
-            errorElement: null,
+            element: <Post />,
+            errorElement: <ErrorPage />,
             loader: async () => { return await fetchUser()},
             children: [
-                {path: ":id", element: null}
+                {path: ":postId", element: <PostId />}
             ]
         }
     ])
