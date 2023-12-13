@@ -10,7 +10,7 @@ export default function Login() {
 
     useEffect(() => {       
         if (user) {
-            nav("/");
+            nav(-1);
         }
 
     }, [nav, user])
@@ -40,7 +40,7 @@ export default function Login() {
         })
         .then(() => {
             update(true);
-            nav("/");
+            nav(-1);
         })
         .catch(err => console.log(err))
     }

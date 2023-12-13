@@ -24,7 +24,7 @@ export default function Logout() {
         })
         .catch(err => console.log(err))
         .finally(() => {
-            nav("/");
+            nav(-1);
         });
     }
 

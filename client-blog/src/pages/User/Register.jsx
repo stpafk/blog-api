@@ -10,7 +10,7 @@ export default function Register() {
 
     useEffect(() => {
         if (user) {
-            nav("/");
+            nav(-1);
         }
 
     }, [user, nav])
@@ -41,7 +41,7 @@ export default function Register() {
         })
         .then( () => {
             update(true);
-            nav("/"); 
+            nav(-1); 
         })
         .catch(err => console.log(err))
     }
