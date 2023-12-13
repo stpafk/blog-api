@@ -29,8 +29,8 @@ export default function PostId() {
 
     }, [postId])
 
-    function submitMessage(e) {
-        e.preventDefault();
+    function submitMessage(value) {
+
         fetch(`http://localhost:3000/post/${postId}/message`, {
             method: "POST",
             credentials: "include",
@@ -38,7 +38,7 @@ export default function PostId() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "content": e.target.elements.content.value,
+                "content": value,
             })})
             .then(res => {
 
