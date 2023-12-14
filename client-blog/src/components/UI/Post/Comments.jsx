@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { useUserContext } from "../../../context/UserContext"
 import { useParams } from "react-router-dom";
-import { handleDeleteMessage } from "../../../utils/handleDeleteMessage";
+import DeleteComment from "./DeleteComment";
+import CommentDetail from "./CommentDetail";
+import CommentForm from "../../Form/CommentForm";
+import { handlePostMessage, handleDeleteMessage } from "../../../utils/handleMessage";
 
 export default function Comments({messages}) {
 
     const { postId } = useParams();
-    const [user, ] = useUserContext();
     const [messageHandler, setMessageHandler] = useState(messages.map(message => ({
         ...message,
         deleting: false,
@@ -21,34 +22,40 @@ export default function Comments({messages}) {
         .catch(err => console.log(err))
     }
 
+    function submitMessage(value) {
+    
+        handlePostMessage(postId, value)
+        .then(data => {
+            let message = data.message.message;
+            message.deleting = false;
+            setMessageHandler(prev => [message, ...prev])
+        }).catch(err => console.log(err));
+
+        setMessageHandler(prev => prev)
+    }
+
     function handleDelete(id) {
         setMessageHandler(messageHandler.map(message => message._id === id ? {
             ...message, deleting: !message.deleting
         } : message))
     }
-    // future change: create two components to handle both delete and display data
     return(
         <>
         <section>
+            <CommentForm submitMessage={submitMessage}/>
             <ul>
-            {messageHandler.map((message) => {
-                return <li key={message._id} id={message._id}>
-                    {message.deleting ? <div>
-                        <p>Do you want to delete this message?</p>
-                        <button onClick={() => submitDelete(message._id)}>Delete</button>
-                        <button onClick={() => handleDelete(message._id)}>Cancel</button>
-                    </div> : <>
-                            <p>{message.username.username}</p>
-                            <p>{message.time_stamp}</p>
-                            <p>{message.content}</p>
-                            {user.user && user.user[0]._id === message.username._id ? 
-                            <button onClick={() => handleDelete(message._id)}>Delete</button> 
-                            :
-                        <></>}
-                    </>}
-                </li>
-            })}
-
+                {messageHandler.map((message) => {
+                    return <li key={message._id} id={message._id}>
+                        {message.deleting ? 
+                        <DeleteComment message={message}
+                        handleDelete={handleDelete}
+                        submitDelete={submitDelete}
+                        />
+                        : 
+                        <CommentDetail message={message} 
+                        handleDelete={handleDelete}/>}
+                    </li>
+                })}
             </ul>
             </section>
         </>
