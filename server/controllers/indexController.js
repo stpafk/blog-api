@@ -157,7 +157,7 @@ exports.get_user = async function(req, res, next) {
         return res.sendStatus(403);
     }
 
-    const user = await User.find({_id: req.userId}).exec();
+    const user = await User.find({_id: req.userId}).select("_id username").exec();
     res.status(200).json({
         user
 });

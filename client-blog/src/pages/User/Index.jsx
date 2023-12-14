@@ -11,7 +11,7 @@ export default function Index() {
             <nav>
                 <h1>Beto Blog</h1>
             </nav>
-            <Outlet context={[user.user[0], nav]}/>
+            <Outlet context={[user, nav]}/>
             <Footer />        
         </>
     )
