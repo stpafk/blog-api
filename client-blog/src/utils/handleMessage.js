@@ -15,9 +15,9 @@ const handlePostMessage = async (postId, value) => {
                 throw new Error("Not logged/Unauthorized to send message.")
             }
 
-            const message = await res.json();
+            const data = await res.json()
 
-            return message;
+            return data;
 
 }
 
