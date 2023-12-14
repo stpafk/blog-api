@@ -6,11 +6,6 @@ const messageController = require('../controllers/messagesController');
 const jwtHandler = require('../middleware/jwtHandler');
 const validateId = require('../middleware/validateId');
 
-router.get('/:id', 
-    validateId,
-    postController.get_post 
-);
-
 router.get('/create', 
     jwtHandler.validate_token, 
     postController.get_create
@@ -56,5 +51,10 @@ router.delete('/:id/message/:messageId',
     jwtHandler.validate_token,
     messageController.delete_message,
 )
+
+router.get('/:id', 
+    validateId,
+    postController.get_post 
+);
 
 module.exports = router;

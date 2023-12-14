@@ -4,6 +4,15 @@ const {validationResult, body, param} = require('express-validator');
 const Message = require('../models/messages');
 
 exports.get_index = async function (req, res, next) {
+
+    if (req.userId === process.env.SUPERUSER) {
+        const posts = await Post.find({}).sort({time_stamp: -1}).exec()
+
+        res.status(200).json({
+            posts
+        })
+    }
+
     const posts = await Post.find({is_uploaded: true})
     .sort({time_stamp: -1})
     .exec();
@@ -67,7 +76,7 @@ exports.post_create = [
     .escape(),
     
     async function(req, res, next) {
-
+        console.log('arrives here')
         if (req.userId !== process.env.SUPERUSER) {
             return res.status(403);
         };
